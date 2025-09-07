@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+    input {
+      padding: 8px;
+      width: 250px;
+    }
+    button {
+      margin-top: 12px;
+      padding: 8px 16px;
+    }
+    ul {
+      margin-top: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .error {
+      color: red;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Student Registration</h2>
+  <form id="studentForm">
+    <label for="fullname">Full Name:</label>
+    <input type="text" id="fullname" name="fullname" />
+
+    <label for="email">Email Address:</label>
+    <input type="text" id="email" name="email" />
+
+    <button type="submit">Add Student</button>
+    <p class="error" id="errorMsg"></p>
+  </form>
+
+  <h3>Student List</h3>
+  <ul id="studentList"></ul>
+
+  <script>
+    document.getElementById("studentForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let fullName = document.getElementById("fullname").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let errorMsg = document.getElementById("errorMsg");
+
+      errorMsg.textContent = ""; // clear error
+
+      if (fullName === "" || email === "") {
+        errorMsg.textContent = "All fields are required.";
+        return;
+      }
+
+      if (!email.includes("@")) {
+        errorMsg.textContent = "Invalid email address. Must contain '@'.";
+        return;
+      }
+
+      // If validation passes → add to list
+      let li = document.createElement("li");
+      li.textContent = Name: ${fullName}, Email: ${email};
+      document.getElementById("studentList").appendChild(li);
+
+      // Clear inputs
+      document.getElementById("fullname").value = "";
+      document.getElementById("email").value = "";
+    });
+  </script>
+<h1>second assignment</h1>
+</body>
+</html>
