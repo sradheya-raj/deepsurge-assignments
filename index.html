@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form with Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-container label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    .form-container input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Register</h2>
+    <form id="registrationForm">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname">
+
+      <label for="email">Email Address</label>
+      <input type="text" id="email" name="email">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // prevent form from submitting until validation
+
+      let fullname = document.getElementById("fullname").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value.trim();
+
+      // Check empty fields
+      if (fullname === "" || email === "" || password === "") {
+        alert("All fields must be filled out.");
+        return;
+      }
+
+      // Check full name first letter uppercase
+      if (fullname.charAt(0) !== fullname.charAt(0).toUpperCase()) {
+        alert("Full Name must start with an uppercase letter.");
+        return;
+      }
+
+      // Validate email format
+      if (!(email.includes("@") && email.includes("."))) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Password length check
+      if (password.length < 8) {
+        alert("Password must be at least 8 characters long.");
+        return;
+      }
+
+      // Password must contain at least one uppercase letter
+      if (!/[A-Z]/.test(password)) {
+        alert("Password must contain at least one uppercase letter.");
+        return;
+      }
+
+      // Password must contain at least one special character
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        alert("Password must contain at least one special character.");
+        return;
+      }
+
+      // If all validations pass
+      alert("Registration successful!");
+      this.submit(); // submit the form
+    });
+  </script>
+<h1> This is my first assignment</h1>
+</body>
+</html>
