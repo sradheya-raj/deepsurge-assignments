@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    form, .search-container {
+      margin-bottom: 1rem;
+    }
+    input {
+      padding: 0.4rem;
+      margin-right: 0.5rem;
+    }
+    button {
+      padding: 0.4rem 0.8rem;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>Contact Manager</h2>
+
+  <!-- Add Contact Form -->
+  <form id="contactForm">
+    <input type="text" id="fullName" placeholder="Full Name" />
+    <input type="text" id="phoneNumber" placeholder="Phone Number" />
+    <button type="submit">Add Contact</button>
+    <div class="error" id="errorMsg"></div>
+  </form>
+
+  <!-- Search Box -->
+  <div class="search-container">
+    <input type="text" id="searchBox" placeholder="Search contacts..." />
+  </div>
+
+  <!-- Contact List -->
+  <ul id="contactList"></ul>
+
+  <script>
+    const contactForm = document.getElementById('contactForm');
+    const fullName = document.getElementById('fullName');
+    const phoneNumber = document.getElementById('phoneNumber');
+    const errorMsg = document.getElementById('errorMsg');
+    const contactList = document.getElementById('contactList');
+    const searchBox = document.getElementById('searchBox');
+
+    // Load contacts from localStorage
+    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    renderContacts(contacts);
+
+    // Handle form submission
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorMsg.textContent = '';
+
+      const nameValue = fullName.value.trim();
+      const phoneValue = phoneNumber.value.trim();
+
+      if (!nameValue || !phoneValue) {
+        errorMsg.textContent = 'Both fields are required.';
+        return;
+      }
+      if (!/^\d+$/.test(phoneValue)) {
+        errorMsg.textContent = 'Phone number must contain digits only.';
+        return;
+      }
+
+      // Add new contact
+      const newContact = { name: nameValue, phone: phoneValue };
+      contacts.push(newContact);
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+
+      renderContacts(contacts);
+      fullName.value = '';
+      phoneNumber.value = '';
+    });
+
+    // Render contact list
+    function renderContacts(list) {
+      contactList.innerHTML = '';
+      list.forEach(contact => {
+        const li = document.createElement('li');
+        li.textContent = `${contact.name} – ${contact.phone}`;
+        contactList.appendChild(li);
+      });
+    }
+
+    // Search contacts
+    searchBox.addEventListener('input', function () {
+      const query = searchBox.value.toLowerCase();
+      const filtered = contacts.filter(c =>
+        c.name.toLowerCase().includes(query) || c.phone.includes(query)
+      );
+      renderContacts(filtered);
+    });
+  </script>
+  <h1>third assignment</h1>
+</body>
+</html>
